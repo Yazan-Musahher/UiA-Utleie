@@ -6,3 +6,4 @@ To start the project you can type:
 ```bash
 docker-compose build 
 docker-compose up
+```
