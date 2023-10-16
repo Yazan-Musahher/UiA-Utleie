@@ -3,16 +3,30 @@ version: '3.4'
 services:
   server:
     build: 
-      context: ./Server  # Path to your ASP.NET Core project folder
+      context: ./Server
       dockerfile: Dockerfile
     container_name: Server
     ports:
       - "8000:80"
+    depends_on:
+      - db
+    environment:  # Add this section
+      - ASPNETCORE_ENVIRONMENT=Development  # Set the environment to Development
 
   client:
     build: 
-      context: ./client  # Path to your React project folder
+      context: ./client
       dockerfile: Dockerfile
     container_name: Client
     ports:
       - "3000:80"
+
+  db:
+    image: postgres
+    container_name: Postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+    ports:
+      - "5434:5434"
