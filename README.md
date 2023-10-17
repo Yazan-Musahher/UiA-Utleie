@@ -7,3 +7,4 @@ To start the project at your terminal you can type:
 docker-compose build 
 docker-compose up
 ```
+#test discord
