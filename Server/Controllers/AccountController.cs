@@ -30,7 +30,9 @@ public class AccountController : ControllerBase
                 Name = model.Name,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
-                StudentNumber = model.StudentNumber
+                StudentNumber = model.StudentNumber,
+                EmailConfirmed = true
+                
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
