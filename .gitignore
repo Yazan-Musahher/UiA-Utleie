@@ -9,3 +9,5 @@ Server/obj/
 
 # Ignore package-lock.json
 client/package-lock.json
+Server/app.db
+Server/bin/Debug/net7.0/app.db
