@@ -19,7 +19,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> Signup([FromBody] SignupInputModel model)
+    public async Task<IActionResult> Signup([FromBody] Signup model)
     {
         if (ModelState.IsValid)
         {
@@ -30,7 +30,9 @@ public class AccountController : ControllerBase
                 Name = model.Name,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
-                StudentNumber = model.StudentNumber
+                StudentNumber = model.StudentNumber,
+                EmailConfirmed = true
+                
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -47,7 +49,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginInputModel model)
+    public async Task<IActionResult> Login([FromBody] Login model)
     {
         if (ModelState.IsValid)
         {
