@@ -1,13 +1,11 @@
 # Ignore database files
-../Server/app.db
-../Server/app.db-shm
-../Server/app.db-wal
+Server/app.db
+Server/app.db-shm
+Server/app.db-wal
 
 # Ignore all files in the bin and obj directories
-../Server/bin/
-../Server/obj/
-../Server/.idea/
+Server/bin/
+Server/obj/
 
 # Ignore package-lock.json
-package-lock.json
-
+client/package-lock.json
