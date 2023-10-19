@@ -2,14 +2,15 @@ import React from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom'; // Import Link
 import uiahjelp from '../assests/uiahjelp.jpg'
+import uialogo from '../assests/uialogo.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 
 function Home() {
     return (
         <div className="home-container">
             <div className="top-navbar">
+                <img src={uialogo} alt="Logo" className="navbar-logo" />
+
                 <a href="#">For studenter |</a>
                 <a href="#">For ansatte</a>
                 <a href="#">Kontakt oss</a>
@@ -46,7 +47,7 @@ function Home() {
 
             <div className="equipment-loan">
                 <p> Har du behov for å låne utstyr?</p>
-                <Link to = "/login" className="equipment-link">Lei utstyr her</Link>
+                <Link to = "/Gallery" className="equipment-link">Lei utstyr her</Link>
             </div>
             
             <footer className="footer">

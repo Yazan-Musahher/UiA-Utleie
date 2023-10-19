@@ -11,7 +11,7 @@
     width: 100%;
     background-color: red;
     color: white;
-    padding: 8px;
+    padding: 16px;
     display: flex;
     justify-content: center;
 }
@@ -159,4 +159,15 @@
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+.top-navbar {
+    display: flex;    /* Use flex to arrange items horizontally */
+    align-items: center;  /* Vertically center align items */
+    /* ... other styles */
+}
+
+.navbar-logo {
+    height: 40px;   /* Adjust as needed */
+    margin-right: 350px;
 }
