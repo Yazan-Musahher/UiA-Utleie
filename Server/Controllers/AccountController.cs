@@ -19,7 +19,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> Signup([FromBody] SignupInputModel model)
+    public async Task<IActionResult> Signup([FromBody] Signup model)
     {
         if (ModelState.IsValid)
         {
@@ -49,7 +49,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginInputModel model)
+    public async Task<IActionResult> Login([FromBody] Login model)
     {
         if (ModelState.IsValid)
         {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/yazan/Desktop/development/Uia/IKT201-2023/Server/Server.csproj": {}
+    "/home/yazan/Desktop/development/Uia/github-utleie/UiA-Utleie/Server/Server.csproj": {}
   },
   "projects": {
-    "/home/yazan/Desktop/development/Uia/IKT201-2023/Server/Server.csproj": {
+    "/home/yazan/Desktop/development/Uia/github-utleie/UiA-Utleie/Server/Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/yazan/Desktop/development/Uia/IKT201-2023/Server/Server.csproj",
+        "projectUniqueName": "/home/yazan/Desktop/development/Uia/github-utleie/UiA-Utleie/Server/Server.csproj",
         "projectName": "Server",
-        "projectPath": "/home/yazan/Desktop/development/Uia/IKT201-2023/Server/Server.csproj",
+        "projectPath": "/home/yazan/Desktop/development/Uia/github-utleie/UiA-Utleie/Server/Server.csproj",
         "packagesPath": "/home/yazan/.nuget/packages/",
-        "outputPath": "/home/yazan/Desktop/development/Uia/IKT201-2023/Server/obj/",
+        "outputPath": "/home/yazan/Desktop/development/Uia/github-utleie/UiA-Utleie/Server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/yazan/.nuget/NuGet/NuGet.Config"
