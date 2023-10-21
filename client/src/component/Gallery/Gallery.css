@@ -11,7 +11,7 @@
 
 .sidebar {
     width: 200px;
-    height: 100vh;  /* Make it full viewport height */
+    height: 100vh;  
     background-color: #555;
     color: white;
     position: fixed;
@@ -29,8 +29,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    overflow-y: auto;  /* Enable scrolling within image container */
-    max-height: calc(100vh - 150px);  /* Adjust as per your requirement */
+    overflow-y: auto; 
+    max-height: calc(100vh - 150px);  
 }
 
 .image-container img {
@@ -40,28 +40,67 @@
     object-fit: cover;
 }
 
-.top-navbar {
-    display: flex;    /* Use flex to arrange items horizontally */
-    align-items: center;  /* Vertically center align items */
-    /* ... other styles */
+.image-container .main-image {
+    width: 30px;
+    height: auto;
 }
 
+.card {
+    max-width: 230px; 
+    margin: auto;  
+}
+
+
+.card-img-top {
+    height: 200px;  
+    object-fit: cover; 
+}
+
+
+.top-navbar {
+    display: flex;    
+    align-items: center;  
+}
+
+/*    Side bar buttons   */
+
+
+
+.filter-section button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px; 
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-section button:hover {
+    background-color: #444; 
+}
+
+
+
 .gallery-navbar-logo {
-    height: 40px;   /* Adjust as needed */
-    margin-left: -900px;  /* Space between logo and the links */
+    height: 40px;   
+    margin-left: -900px;
 }
 .filter-section {
-    margin-top: 20px;  /* Space from other sidebar content */
+    margin-top: 20px;  
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;  /* Space between checkbox items */
+    margin-bottom: 10px; 
 }
 
 .checkbox-item input[type="checkbox"] {
-    margin-right: 8px;  /* Space between checkbox and label */
+    margin-right: 8px;  
 }
 .gallery-footer {
     background-color: #333;
@@ -79,7 +118,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    gap: 15px;  /* Space between items */
+    gap: 15px;  
 }
 
 .gallery-footer ul li {
