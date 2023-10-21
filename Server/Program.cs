@@ -6,11 +6,19 @@ using Server.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var postgresConnectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseNpgsql(postgresConnectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+// Add PostgreSQL DbContext Service 
+
+builder.Services.AddDbContext<ToolDbContext>(options =>
+    options.UseNpgsql(postgresConnectionString));
+
+
+// IdentityRole
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -27,13 +35,21 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Call the database initializer
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
 using (var services = app.Services.CreateScope())
 {
-    var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    ApplicationDbInitializer.Initialize(db, um, rm);
+    try
+    {
+        var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        ApplicationDbInitializer.Initialize(db, um, rm).Wait(); // Again, consider using async/await here
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred while initializing the database");
+    }
 }
 
 // Configure the HTTP request pipeline.
