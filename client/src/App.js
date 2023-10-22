@@ -6,6 +6,7 @@ import Home from './component/Home/Home';
 import Login from './component/Authentication/login';
 import Signup from './component/Authentication/Signup';
 import Gallery from "./component/Gallery/Gallery";
+import GalleryAuth from './component/GalleryAuth/GalleryAuth';
 
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/Gallery" element={<Gallery />} />  {/* Add this line */}
+          <Route path="/Gallery" element={<Gallery />} />
+          <Route path="/Gallery/Authenticated" element={<GalleryAuth />} />
+          
+
           
         </Routes>
       </div>
