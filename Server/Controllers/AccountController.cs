@@ -45,7 +45,7 @@ public class AccountController : ControllerBase
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
-        return BadRequest(new { message = "Signup failed", errors = ModelState });
+        return BadRequest(new { message = "User already exists", errors = ModelState });
     }
 
     [HttpPost("login")]
