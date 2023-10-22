@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody, CardHeader } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link, useNavigate } from 'react-router-dom'; // Import Link
 
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -29,7 +30,15 @@ function Login() {
             }
 
             console.log('Login successful:', data);
+
+            // Storing isAuthenticated flag in local storage
+            localStorage.setItem('isAuthenticated', 'true');
+
+            // Storing username in local storage
+            localStorage.setItem('username', data.name);  // Storing the username
+
             setMessage('Login successful');
+            navigate('/Gallery/Authenticated')
         } catch (error) {
             console.error('There has been a problem with your fetch operation:', error);
             setMessage('An error occurred while trying to log in');
@@ -37,10 +46,10 @@ function Login() {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', color: 'white' }}>
-            <Card style={{ width: '400px', marginTop: '-50px' }}>
-                <CardHeader className="bg-danger text-white">Login</CardHeader>
-                <CardBody>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
+            <Card style={{ width: '25rem', maxWidth: 'none', padding: '25px', borderRadius: '50px', marginTop: '150px' }}>
+                <CardHeader className="bg-danger text-white" style={{ borderRadius: '25px' }}>Login</CardHeader>
+                <CardBody style={{ padding: '25px' }}>
                     {message && <Alert color={message === 'Login successful' ? 'success' : 'danger'}>{message}</Alert>}
                     <Form onSubmit={handleLogin}>
                         <FormGroup>
@@ -67,14 +76,14 @@ function Login() {
                                 required
                             />
                         </FormGroup>
-                        <Button type="submit" color="danger" block>Login</Button>
+                        <Button type="submit" color="danger" block style={{ borderRadius: '25px' }}>Login</Button>
                     </Form>
                     <Button color="link" className="mt-3" style={{ color: 'black' }}>Forgot Password?</Button>
-                   <Link to = '/Signup'><Button color="danger" className="mt-3" block>Register</Button></Link> 
+                    <Link to="/Signup"><Button color="danger" className="mt-3" block style={{ borderRadius: '25px' }}>Register</Button></Link>
                 </CardBody>
             </Card>
         </Container>
     );
-}
+}    
 
 export default Login;

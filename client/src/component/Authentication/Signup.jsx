@@ -56,10 +56,10 @@ function Signup() {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh',color: 'white' }}>
-            <Card style={{ width: '400px', marginTop: '-50px' }}>
-                <CardHeader className="bg-danger text-white">Signup</CardHeader>
-                <CardBody>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
+            <Card style={{ width: '25rem', maxWidth: 'none', padding: '25px', borderRadius: '50px', marginTop: '85' }}>
+                <CardHeader className="bg-danger text-white" style={{ borderRadius: '25px' }}>Signup</CardHeader>
+                <CardBody style={{ padding: '25px' }}>
                     {message && <Alert color={message === 'Signup successful' ? 'success' : 'danger'}>{message}</Alert>}
                     <Form onSubmit={handleSignup}>
                         <FormGroup>
@@ -134,12 +134,11 @@ function Signup() {
                                 required
                             />
                         </FormGroup>
-                        <Button type="submit" color="danger" block>Signup</Button>
-                        <Link to = '/Login'><Button color="white" className="mt-4" block>Already have account? </Button></Link> 
+                        <Button type="submit" color="danger" block style={{ borderRadius: '25px' }}>Signup</Button>
                     </Form>
+                    <Link to="/Login"><Button color="white" className="mt-3" block style={{ borderRadius: '25px' }}>Already have an account?</Button></Link>
                 </CardBody>
             </Card>
-            
         </Container>
     );
 }

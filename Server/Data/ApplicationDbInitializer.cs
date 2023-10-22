@@ -1,43 +1,50 @@
 using Microsoft.AspNetCore.Identity;
 using Server.Models;
+using System.Threading.Tasks;
 
-namespace Server.Data;
-
-public static class ApplicationDbInitializer
+namespace Server.Data
 {
-    public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm)
+    public static class ApplicationDbInitializer
     {
-        
-        // Delete existing database
-        db.Database.EnsureDeleted();
+        public static async Task Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm)
+        {
+            // Create roles
+            if (!await rm.RoleExistsAsync("Admin"))
+            {
+                var adminRole = new IdentityRole("Admin");
+                await rm.CreateAsync(adminRole);
+            }
 
-        // Create new database
-        db.Database.EnsureCreated();
-        
-        // Create roles
-        var adminRole = new IdentityRole("Admin");
-        rm.CreateAsync(adminRole).Wait();
-        
-        
-        // Add standard users
-        var admin = new ApplicationUser()
-            { UserName = "admin@uia.no", Email = "admin@uia.no", Name = "Admin",LastName = "Adminson",StudentNumber = "S123456", EmailConfirmed = true };
-        
-        var user = new ApplicationUser()
-            { UserName = "user@uia.no", Email = "user@uia.no", Name = "User", LastName = "Userson",StudentNumber = "S123457" ,EmailConfirmed = true };
-        
-        var user2 = new ApplicationUser()
-            { UserName = "user2@uia.no", Email = "user2@uia.no", Name = "User2",LastName = "User2son",StudentNumber = "S123457", EmailConfirmed = true };
+            // Add standard users
+            await CreateUser(um, "admin@uia.no", "Admin", "Adminson", "S123456", "Password1.", "Admin");
+            await CreateUser(um, "user@uia.no", "User", "Userson", "S123457", "Password1.");
+            await CreateUser(um, "user2@uia.no", "User2", "User2son", "S123457", "Password1.");
 
-        um.CreateAsync(admin, "Password1.").Wait();
-        um.AddToRoleAsync(admin, "Admin").Wait();
-        
-        um.CreateAsync(user, "Password1.").Wait();
-        um.CreateAsync(user2, "Password1.").Wait();
-        
-       
-        // Save changes made to database
-        db.SaveChanges();
-        
+            // Save changes made to database
+            db.SaveChanges();
+        }
+
+        private static async Task CreateUser(UserManager<ApplicationUser> um, string email, string firstName, string lastName, string studentNumber, string password, string role = null)
+        {
+            if (await um.FindByNameAsync(email) == null)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = email,
+                    Email = email,
+                    Name = firstName,
+                    LastName = lastName,
+                    StudentNumber = studentNumber,
+                    EmailConfirmed = true
+                };
+
+                await um.CreateAsync(user, password);
+
+                if (role != null)
+                {
+                    await um.AddToRoleAsync(user, role);
+                }
+            }
+        }
     }
 }
