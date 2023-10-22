@@ -48,18 +48,25 @@ public class AccountController : ControllerBase
         return BadRequest(new { message = "User already exists", errors = ModelState });
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] Login model)
+   [HttpPost("login")]
+public async Task<IActionResult> Login([FromBody] Login model)
+{
+    if (ModelState.IsValid)
     {
-        if (ModelState.IsValid)
+        var user = await _userManager.FindByEmailAsync(model.Email); // Find the user by email
+        if (user == null)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return Ok(new { message = "Login successful" });
-            }
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return BadRequest(new { message = "Login failed", errors = ModelState });
         }
-        return BadRequest(new { message = "Login failed", errors = ModelState });
+
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+            return Ok(new { message = "Login successful", name = user.Name }); // Return the user's name in the response
+        }
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
     }
+    return BadRequest(new { message = "Login failed", errors = ModelState });
+}
 }
