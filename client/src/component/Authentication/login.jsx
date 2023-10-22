@@ -37,10 +37,10 @@ function Login() {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', color: 'white' }}>
-            <Card style={{ width: '400px', marginTop: '-50px' }}>
-                <CardHeader className="bg-danger text-white">Login</CardHeader>
-                <CardBody>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
+            <Card style={{ width: '25rem', maxWidth: 'none', padding: '25px', borderRadius: '50px', marginTop: '150px' }}>
+                <CardHeader className="bg-danger text-white" style={{ borderRadius: '25px' }}>Login</CardHeader>
+                <CardBody style={{ padding: '25px' }}>
                     {message && <Alert color={message === 'Login successful' ? 'success' : 'danger'}>{message}</Alert>}
                     <Form onSubmit={handleLogin}>
                         <FormGroup>
@@ -67,14 +67,14 @@ function Login() {
                                 required
                             />
                         </FormGroup>
-                        <Button type="submit" color="danger" block>Login</Button>
+                        <Button type="submit" color="danger" block style={{ borderRadius: '25px' }}>Login</Button>
                     </Form>
                     <Button color="link" className="mt-3" style={{ color: 'black' }}>Forgot Password?</Button>
-                   <Link to = '/Signup'><Button color="danger" className="mt-3" block>Register</Button></Link> 
+                    <Link to="/Signup"><Button color="danger" className="mt-3" block style={{ borderRadius: '25px' }}>Register</Button></Link>
                 </CardBody>
             </Card>
         </Container>
     );
-}
+}    
 
 export default Login;
