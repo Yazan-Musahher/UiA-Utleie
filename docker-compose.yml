@@ -5,6 +5,7 @@ services:
     build: 
       context: ./Server
       dockerfile: Dockerfile
+    image: sinus707/server:latest    
     container_name: Server
     ports:
       - "5210:80"
@@ -19,6 +20,7 @@ services:
     build: 
       context: ./client
       dockerfile: Dockerfile
+    image: sinus707/client:latest  
     container_name: Client
     ports:
       - "3000:80"
