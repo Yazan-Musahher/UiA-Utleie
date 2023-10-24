@@ -7,11 +7,13 @@ services:
       dockerfile: Dockerfile
     container_name: Server
     ports:
-      - "8000:80"
+      - "5210:80"
     depends_on:
       - db
-    environment:  # Add this section
-      - ASPNETCORE_ENVIRONMENT=Development  # Set the environment to Development
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - mynetwork
 
   client:
     build: 
@@ -20,13 +22,28 @@ services:
     container_name: Client
     ports:
       - "3000:80"
+    networks:
+      - mynetwork
 
   db:
     image: postgres
     container_name: Postgres
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Yazan55
+      POSTGRES_DB: Uia-tools
     ports:
-      - "5434:5434"
+      - "5432:5432"
+    volumes:
+      - my-db:/var/lib/postgresql/data
+      - ./tool03.sql:/docker-entrypoint-initdb.d/tool03.sql
+      - ./restore-db.sh:/docker-entrypoint-initdb.d/restore-db.sh 
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  my-db:
