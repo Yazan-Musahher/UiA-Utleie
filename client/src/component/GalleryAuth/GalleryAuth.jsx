@@ -39,10 +39,12 @@ function GalleryAuth() {
 
     return (
         <div className="gallery-page">
-            <div className="navbar">
-                <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
+            <div className="navbar2">
+                <img src={uialogo} alt="Logo" className="gallery-navbar-logo2" />
+                <div className="navbar-right-content">
                 <span className="username">Welcome, {username}!</span>  {/* Display the username here */}
                 <button onClick={logout} className="btn btn-danger">Logout</button>
+            </div>
             </div>
             <div className="sidebar">
                 <div className="filter-section">
@@ -55,7 +57,7 @@ function GalleryAuth() {
                     <button className="btn btn-secondary mb-2" onClick={() => setSelectedCategory(5)}>Ipad</button>
                 </div>
             </div>
-
+<div className="main-content">
             <div className="container mt-5">
                 <div className="row">
                     {tools.map(tool => (
@@ -70,6 +72,7 @@ function GalleryAuth() {
                     ))}
                 </div>
             </div>
+</div>
 
             <div className="gallery-footer">
                 <p>© 2023 Your Company Name. All rights reserved.</p>

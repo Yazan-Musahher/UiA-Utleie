@@ -5,7 +5,8 @@
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 20px;
     background-color: red;
     position: fixed;
     top: 0;
@@ -14,14 +15,15 @@
 
 .sidebar {
     width: 200px;
-    height: 100vh;  
+    
+    height: calc(100vh - 150px);  /* Adjusted height */
     background-color: #555;
     color: white;
     position: fixed;
     top: 75px;
     left: 0;
     padding: 20px;
-    overflow-y: auto;  
+    overflow-y: auto; /* Allow scrolling within the sidebar if its content overflows */
     z-index: 10;
 }
 
@@ -46,28 +48,24 @@
 .image-container .main-image {
     width: 30px;
     height: auto;
+    
 }
 
 .card {
-    max-width: 230px; 
-    margin: auto;  
-}
+    max-width: 230px;
+    min-width: 200px;
 
+}
 
 .card-img-top {
     height: 200px;  
     object-fit: cover; 
 }
 
-
 .top-navbar {
     display: flex;    
     align-items: center;  
 }
-
-/*    Side bar buttons   */
-
-
 
 .filter-section button {
     display: block;
@@ -86,11 +84,9 @@
     background-color: #444; 
 }
 
-
-
 .gallery-navbar-logo {
     height: 40px;   
-    margin-left: -900px;
+   
 }
 .filter-section {
     margin-top: 20px;  
@@ -105,12 +101,38 @@
 .checkbox-item input[type="checkbox"] {
     margin-right: 8px;  
 }
+
+/* Adjustments for the main content after the navbar and sidebar */
+.main-content {
+    margin-top: 75px;  /* Because of the navbar */
+    margin-left: 220px;
+    flex: 1 0 auto;
+}
+
+/* Adjustments for the image container if needed */
+.container {
+    padding-top: 20px;  /* Add some padding at the top for better spacing */
+}
+
 .gallery-footer {
     background-color: #333;
     color: #fff;
     padding: 5.5px;
     text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+    z-index: 1010;
+    margin-top: auto;
 }
+
+.gallery-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 
 .gallery-footer p {
     margin: 0;
@@ -121,7 +143,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    gap: 15px;  
+    gap: 15px;
 }
 
 .gallery-footer ul li {

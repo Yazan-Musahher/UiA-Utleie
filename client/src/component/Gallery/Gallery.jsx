@@ -43,6 +43,7 @@ function Gallery() {
                 </div>
             </div>
 
+            <div className="main-content">
             <div className="container mt-5">
                 <div className="row">
                     {tools.map(tool => (
@@ -57,7 +58,7 @@ function Gallery() {
                     ))}
                 </div>
             </div>
-
+            </div>
             <div className="gallery-footer">
                 <p>© 2023 Your Company Name. All rights reserved.</p>
                 <ul>
