@@ -53,20 +53,28 @@ public async Task<IActionResult> Login([FromBody] Login model)
 {
     if (ModelState.IsValid)
     {
-        var user = await _userManager.FindByEmailAsync(model.Email); // Find the user by email
+        var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return BadRequest(new { message = "Login failed", errors = ModelState });
         }
 
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: false);
         if (result.Succeeded)
         {
-            return Ok(new { message = "Login successful", name = user.Name }); // Return the user's name in the response
+            return Ok(new { message = "Login successful", name = user.Name });
         }
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
     }
     return BadRequest(new { message = "Login failed", errors = ModelState });
 }
+
+[HttpPost("logout")]
+public async Task<IActionResult> Logout()
+{
+    await _signInManager.SignOutAsync(); // This will clear the cookie
+    return Ok(new { message = "Logout successful" });
+}
+
 }
