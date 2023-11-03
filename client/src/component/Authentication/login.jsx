@@ -20,6 +20,7 @@ function Login() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ Email: username, Password: password }),
+                credentials: 'include',
             });
 
             const data = await response.json();
