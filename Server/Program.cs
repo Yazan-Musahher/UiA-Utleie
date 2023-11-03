@@ -30,7 +30,21 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         builder => builder.WithOrigins("http://localhost:3000") // Adjust the URL to match your React app's URL
             .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowCredentials());
+});
+
+// Add Cookie to store User Auth
+
+// Add Cookie to store User Auth
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Set the cookie to expire in 60 minutes
+    options.LoginPath = "/api/account/login"; // Your login path
+    options.LogoutPath = "/api/account/logout"; // Your logout path
+    options.SlidingExpiration = true; // Resets the expiration time if more than half the time has passed
+    // More options can be set as needed
 });
 
 var app = builder.Build();
