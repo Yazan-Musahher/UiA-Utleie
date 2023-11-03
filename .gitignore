@@ -13,3 +13,6 @@ Server/app.db
 Server/bin/Debug/net7.0/app.db
 .idea/
 *.sln
+
+package-lock.json
+package.json
