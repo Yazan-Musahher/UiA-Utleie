@@ -13,7 +13,7 @@ namespace Server.Controllers;
 public class ToolRentingController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ToolDbContext _context; // Use your ToolDbContext
+    private readonly ToolDbContext _context;
 
     public ToolRentingController(UserManager<ApplicationUser> userManager, ToolDbContext context)
     {
@@ -68,8 +68,6 @@ await _context.SaveChangesAsync(); // Save changes to the database
         }
         catch (Exception ex)
         {
-            // Log the exception here
-            // Return a generic error message to the client
             return StatusCode(500, new { message = "An error occurred while renting the tool.", error = ex.Message });
         }
     }
