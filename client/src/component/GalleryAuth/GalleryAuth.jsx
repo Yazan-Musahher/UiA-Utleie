@@ -1,11 +1,11 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import date picker styles
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './GalleryAuth.css'; // Your CSS file for styling
+import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './GalleryAuth.css';
 import uialogo from '../assests/uialogo.png';
-import ProtectedRoute from '../../ProtectedRoute'; // Your protected route component
+import ProtectedRoute from '../../ProtectedRoute';
 
 function GalleryAuth() {
     const [tools, setTools] = useState([]);
@@ -41,9 +41,12 @@ function GalleryAuth() {
 
     // Logout logic
     const logout = () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userName');
-        navigate('/login');
+
+    // Clear user token and profile data from localStorage
+     localStorage.removeItem('authToken');
+     localStorage.removeItem('username');
+     localStorage.removeItem('isAuthenticated');
+         navigate('/login');
     };
 
     // Function to handle tool rental

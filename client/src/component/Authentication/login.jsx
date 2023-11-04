@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody, CardHeader } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -25,21 +25,17 @@ function Login() {
 
             const data = await response.json();
 
-            if (!response.ok) {
-                setMessage('Invalid Email or Password');
-                return;
+            if (response.ok) {
+                // If login is successful, store the JWT in local storage
+                localStorage.setItem('authToken', data.token); // Storing the token
+                localStorage.setItem('username', data.name); // Storing the user's name
+                localStorage.setItem('isAuthenticated', 'true');
+
+                setMessage('Login successful');
+                navigate('/Gallery/Authenticated'); // Redirect to a protected route after login
+            } else {
+                setMessage(data.message || 'Invalid email or password');
             }
-
-            console.log('Login successful:', data);
-
-            // Storing isAuthenticated flag in local storage
-            localStorage.setItem('isAuthenticated', 'true');
-
-            // Storing username in local storage
-            localStorage.setItem('username', data.name);  // Storing the username
-
-            setMessage('Login successful');
-            navigate('/Gallery/Authenticated')
         } catch (error) {
             console.error('There has been a problem with your fetch operation:', error);
             setMessage('An error occurred while trying to log in');
