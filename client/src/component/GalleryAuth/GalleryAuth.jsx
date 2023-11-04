@@ -56,16 +56,17 @@ function GalleryAuth() {
             alert('Please select a date before renting a tool.');
             return;
         }
-
+    
         const formattedDate = rentalDate.toISOString();
-
+        const authToken = localStorage.getItem('authToken'); // Get the stored token
+    
         fetch('http://localhost:5210/api/toolrenting/rent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`, // Set the Authorization header with the token
             },
             body: JSON.stringify({ toolId, rentingDate: formattedDate }),
-            credentials: 'include' // Include cookies with the request
         })
         .then(response => {
             if (!response.ok) {
