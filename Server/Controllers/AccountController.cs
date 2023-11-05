@@ -96,89 +96,87 @@ public class AccountController : ControllerBase
             return BadRequest(new { message = "Login failed" });
         }
     }
-
-    [HttpGet("login/feide")]
+    
+    // Method to redirect to Feide for authentication
+[HttpGet("login/feide")]
 public IActionResult LoginWithFeide()
 {
-    // Additional scopes are being set in the properties to be included in the challenge request
-    var properties = new AuthenticationProperties
-    {
-        RedirectUri = Url.Action("HandleFeideLogin"),
-        Items = { { "scope", "openid profile email userid-feide userinfo-name" } } // Requesting the userinfo-name scope
-    };
-    return Challenge(properties, "Feide");
+    var redirectUrl = Url.Action(nameof(HandleFeideLogin), "Account");
+    var properties = _signInManager.ConfigureExternalAuthenticationProperties("Feide", redirectUrl);
+    return new ChallengeResult("Feide", properties);
 }
 
-[HttpGet("handle-feide-login")]
-public async Task<IActionResult> HandleFeideLogin()
-{
-    // This method is called after the user has been authenticated with Feide
-    if (User.Identity.IsAuthenticated)
+    // Callback method for handling the response from Feide
+    [HttpGet("handle-feide-login")]
+    public async Task<IActionResult> HandleFeideLogin()
     {
-        var claims = User.Claims.ToList();
-        var userIdClaim = claims.FirstOrDefault(c => c.Type == "userid-feide")?.Value;
-        var emailClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-        var nameClaim = claims.FirstOrDefault(c => c.Type == "userinfo-name")?.Value;
-
-        ApplicationUser user = await _userManager.FindByEmailAsync(emailClaim);
-        if (user == null)
+        var info = await _signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
         {
-            user = new ApplicationUser
-            {
-                Id = userIdClaim,
-                UserName = emailClaim, // Assuming you want the user's email to be their username
-                Email = emailClaim,
-                Name = nameClaim,
-                EmailConfirmed = true
-            };
-
-            var createUserResult = await _userManager.CreateAsync(user);
-            if (!createUserResult.Succeeded)
-            {
-                // Log each error
-                foreach (var error in createUserResult.Errors)
-                {
-                    _logger.LogError("User creation failed: {Error}", error.Description);
-                }
-
-                return BadRequest(new { message = "Failed to create local user account" });
-            }
+            return RedirectToAction("Login"); // Replace with your login endpoint if different
         }
 
-        var tokenString = GenerateJwtToken(user);
-        Response.Cookies.Append("authToken", tokenString, new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None });
-        var frontendRedirectUrl = "http://localhost:3000/Gallery/";
-        return Redirect(frontendRedirectUrl + $"Authenticated?authToken={Uri.EscapeDataString(tokenString)}");
+        // Sign in the user with this external login provider if the user already has a login.
+        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
+        if (result.Succeeded)
+        {
+            // User is now signed in, now get your user based on the login info:
+            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            // Generate a JWT token for the user and return it to the client.
+            var token = GenerateJwtTokenForUser(user);
+            // Redirect to the client application with the JWT token
+            var reactAppUrl = "http://localhost:3000/login";
+            reactAppUrl += $"?token={token}&name={Uri.EscapeDataString(user.Name)}"; // Assuming user.Name contains the name
+            return Redirect(reactAppUrl);
+        }
+        else
+        {
+            // Attempt to retrieve the email and name from Feide's specific claim types
+            var emailClaim = info.Principal.FindFirst("email")?.Value; // Custom claim type as provided by Feide
+            var nameClaim = info.Principal.FindFirst("userinfo-name")?.Value; // Custom claim type as provided by Feide
+
+            // Check if both claims are not null
+            if (!string.IsNullOrEmpty(emailClaim) && !string.IsNullOrEmpty(nameClaim))
+            {
+                // Redirect to the registration page with email and name as query parameters
+                var registrationPageUrl = "http://localhost:3000/signupFeide";
+                registrationPageUrl += $"?email={Uri.EscapeDataString(emailClaim)}&name={Uri.EscapeDataString(nameClaim)}";
+                return Redirect(registrationPageUrl);
+            }
+            else
+            {
+                // Handle the case when the necessary claims are not present
+                return BadRequest("Required information is missing from the external login provider.");
+            }
+        }
     }
 
-    return BadRequest(new { message = "Feide login failed" });
-}
-
-private string GenerateJwtToken(ApplicationUser user)
-{
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
-    var tokenDescriptor = new SecurityTokenDescriptor
+    // Utility method to generate JWT token for a given user
+    private string GenerateJwtTokenForUser(ApplicationUser user)
     {
-        Subject = new ClaimsIdentity(new[]
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email)
-            // Add other claims as needed
-        }),
-        Expires = DateTime.UtcNow.AddMinutes(30),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-        Issuer = _configuration["Jwt:Issuer"],
-        Audience = _configuration["Jwt:Audience"]
-    };
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                // Add more claims if needed
+            }),
+            Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+            Issuer = _configuration["Jwt:Issuer"],
+            Audience = _configuration["Jwt:Audience"]
+        };
 
-    var token = tokenHandler.CreateToken(tokenDescriptor);
-    return tokenHandler.WriteToken(token);
-}
-
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
+    }
     
-    
+  
 
 
     [HttpPost("logout")]

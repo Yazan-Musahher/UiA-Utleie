@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Server.Models;
-using Server.Data; // Add this to use ToolDbContext
+using Server.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
