@@ -20,7 +20,7 @@ function GalleryAuth() {
             setUsername(savedUsername);
         }
 
-        let url = 'http://localhost:5210/api/tools';
+        let url = 'https://localhost:5210/api/tools';
         if (selectedCategory) {
             url += `?categoryId=${selectedCategory}`;
         }
@@ -49,23 +49,24 @@ function GalleryAuth() {
          navigate('/login');
     };
 
-    // Function to handle tool rental
+     // Function to handle tool rental
     const rentTool = (toolId) => {
         const rentalDate = rentalDates[toolId];
         if (!rentalDate) {
             alert('Please select a date before renting a tool.');
             return;
         }
-
+    
         const formattedDate = rentalDate.toISOString();
-
+        const authToken = localStorage.getItem('authToken'); // Get the stored token
+    
         fetch('http://localhost:5210/api/toolrenting/rent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`, // Set the Authorization header with the token
             },
             body: JSON.stringify({ toolId, rentingDate: formattedDate }),
-            credentials: 'include' // Include cookies with the request
         })
         .then(response => {
             if (!response.ok) {
@@ -81,7 +82,6 @@ function GalleryAuth() {
             alert('There was an error renting the tool.');
         });
     };
-
     // Function to handle date change
     const handleDateChange = (date, toolId) => {
         setRentalDates({

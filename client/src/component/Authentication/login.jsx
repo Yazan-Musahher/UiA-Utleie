@@ -14,7 +14,7 @@ function Login() {
         setMessage('');
 
         try {
-            const response = await fetch('http://localhost:5210/api/account/login', {
+            const response = await fetch('https://localhost:5210/api/account/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,15 @@ function Login() {
             console.error('There has been a problem with your fetch operation:', error);
             setMessage('An error occurred while trying to log in');
         }
+
+
     };
+    const handleFeideLogin = () => {
+        // Redirect to the backend Feide login route
+        // Replace 'http://localhost:5210' with your actual backend host if it's different
+        window.location.href = 'https://localhost:5210/api/account/login/feide';
+    };
+
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
@@ -74,11 +82,17 @@ function Login() {
                             />
                         </FormGroup>
                         <Button type="submit" color="danger" block style={{ borderRadius: '25px' }}>Login</Button>
+                        <Button onClick={handleFeideLogin} color="primary" block style={{ borderRadius: '25px', marginTop: '10px' }}>
+                            Login with Feide
+                        </Button>
                     </Form>
                     <Button color="link" className="mt-3" style={{ color: 'black' }}>Forgot Password?</Button>
                     <Link to="/Signup"><Button color="danger" className="mt-3" block style={{ borderRadius: '25px' }}>Register</Button></Link>
                 </CardBody>
+                
             </Card>
+            
+            
         </Container>
     );
 }    

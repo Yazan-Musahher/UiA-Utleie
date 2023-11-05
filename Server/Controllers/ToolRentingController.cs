@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 
 namespace Server.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ToolRentingController : ControllerBase

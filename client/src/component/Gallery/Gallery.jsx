@@ -10,7 +10,7 @@ function Gallery() {
     const navigate = useNavigate();  // Instantiate useNavigate
 
     useEffect(() => {
-        let url = 'http://localhost:5210/api/tools';
+        let url = 'https://localhost:5210/api/tools';
         if (selectedCategory) {
             url += `?categoryId=${selectedCategory}`;
         }
