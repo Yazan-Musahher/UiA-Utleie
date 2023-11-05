@@ -60,7 +60,7 @@ function GalleryAuth() {
         const formattedDate = rentalDate.toISOString();
         const authToken = localStorage.getItem('authToken'); // Get the stored token
     
-        fetch('http://localhost:5210/api/toolrenting/rent', {
+        fetch('https://localhost:5210/api/toolrenting/rent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

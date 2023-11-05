@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody, CardHeader } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,21 @@ function Login() {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const name = urlParams.get('name'); 
+        console.log("URL search params:", window.location.search); // Log the full search params
+        console.log("Extracted token:", token); // Log the extracted token
+      
+        if (token) {
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('username', name);
+          navigate('/Gallery/Authenticated'); // Redirect to the protected page
+        }
+      }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -44,9 +59,9 @@ function Login() {
 
     };
     const handleFeideLogin = () => {
-        // Redirect to the backend Feide login route
-        // Replace 'http://localhost:5210' with your actual backend host if it's different
+        // Redirect to the Feide login endpoint on your API
         window.location.href = 'https://localhost:5210/api/account/login/feide';
+        
     };
 
 
