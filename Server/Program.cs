@@ -34,7 +34,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        builder => builder.WithOrigins("http://localhost:3000") // Adjust the URL to match your React app's URL
+        builder => builder.WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
@@ -100,13 +100,12 @@ builder.Services.AddAuthentication(options =>
 
     // Save tokens to be able to use them for subsequent API calls.
     options.SaveTokens = true;
-
-    // Optionally handle events, e.g., OnTokenValidated, OnAuthorizationCodeReceived.
+    
 });
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // You can set the idle timeout as needed.
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // Make the session cookie essential
 });
@@ -131,6 +130,7 @@ using (var services = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while initializing the database");
     }
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
