@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
-
+import uialogo from '../assests/uialogo.png';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -68,6 +68,12 @@ function Login() {
 
 
     return (
+        <>
+            <div className="navbar">
+                <Link to="/">
+                    <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
+                </Link>
+            </div>
         <div className={styles.fullHeight}>
             <Card className={styles.loginCard} style={{ maxWidth: '500px' }}>
                 <CardHeader className={styles.loginCardHeader}>Login</CardHeader>
@@ -110,6 +116,15 @@ function Login() {
                 
             </Card>
         </div>
+            <div className={styles.galleryFooter}>
+                <p>© 2023 Your Company Name. All rights reserved.</p>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </>
     );
 }    
 

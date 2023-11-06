@@ -3,6 +3,8 @@ import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody, CardHeade
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
+import uialogo from '../assests/uialogo.png';
+
 
 function Signup() {
     const [formData, setFormData] = useState({
@@ -57,6 +59,12 @@ function Signup() {
     };
 
     return (
+        <>
+            <div className="navbar">
+                <Link to="/">
+                    <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
+                </Link>
+            </div>
         <div className={styles.fullHeight}>
             <Card className={styles.loginCard} style={{ maxWidth: '500px' }}>
                 <CardHeader className={styles.loginCardHeader}>Signup</CardHeader>
@@ -141,6 +149,15 @@ function Signup() {
                 </CardBody>
             </Card>
         </div>
+            <div className={styles.galleryFooter}>
+                <p>© 2023 Your Company Name. All rights reserved.</p>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </>
     );
 }
 

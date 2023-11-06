@@ -1,15 +1,17 @@
 ﻿.fullHeight {
-    height: 100vh;
+    height: calc(100vh); /* Subtract the height of the navbar */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f7f7f7; /* Or any color you prefer */
+    padding-top: 75px;
 }
 
 .loginCard {
     width: 100%;
     max-width: 800px; /* Adjust the width as you see fit */
     margin: auto;
+
 }
 
 .loginCardHeader {
@@ -38,4 +40,54 @@
     width: 100%;
     margin-top: 1rem;
     border-radius: 25px;
+}
+.navbar {
+    width: 100%;
+    height: 75px;
+    background-color: red; /* This color seems to be the chosen one */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This is kept from GalleryAuth.css for better alignment */
+    padding: 0 15px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    overflow: visible;
+}
+/* ... footer ... */
+
+.galleryFooter {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: #333; /* Choose a color that fits the footer */
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.galleryFooter p {
+    margin-bottom: 0.5rem;
+}
+
+.galleryFooter ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.galleryFooter ul li {
+    margin: 0 10px;
+}
+
+.galleryFooter ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.galleryFooter ul li a:hover {
+    text-decoration: underline;
 }
