@@ -7,11 +7,34 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
+    z-index: 1000;
 }
 
+/* Adjust the logo size and navbar padding based on screen size */
+@media (max-width: 768px) {
+    .navbar {
+        height: 60px; /* Smaller navbar for smaller devices */
+        padding: 0 15px; /* Add padding on smaller screens */
+        justify-content: space-between; /* Adjust content spacing */
+    }
+
+    .gallery-navbar-logo {
+        height: 30px; /* Smaller logo for smaller devices */
+        margin-left: 0; /* Reset any negative margins that might be causing layout issues */
+    }
+}
+/* You might want to add additional media queries for different breakpoints, e.g., for tablets and large desktops */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Adjust styles for tablet devices */
+}
+
+@media (min-width: 1025px) {
+    /* Adjust styles for large desktop devices */
+}
 .gallery-navbar-logo {
-    height: 50px;
-    margin-left: 250px;
+    height: 40px; /* Adjust if needed */
+    margin-left: 0; /* Make sure this is not negative */
+    /* Add more properties if needed to ensure visibility */
 }
 
 .nav-right {
@@ -69,6 +92,7 @@
     color: #fff;
     padding: 5.5px;
     text-align: center;
+    
 }
 
 .gallery-footer p {

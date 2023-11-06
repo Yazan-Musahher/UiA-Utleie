@@ -87,11 +87,6 @@
 }
 
 
-
-.gallery-navbar-logo {
-    height: 40px;   
-    margin-left: -900px;
-}
 .filter-section {
     margin-top: 20px;  
 }
@@ -136,4 +131,17 @@
 
 .gallery-footer ul li a:hover {
     color: #2196F3;
+}
+.container {
+    margin-top: 5rem; /* already present */
+    margin-left: 220px; /* adjust this value to match your sidebar width + padding */
+    padding-right: 20px; /* This adds padding on the right side */
+    overflow-x: hidden; /* This ensures no horizontal scroll */
+}
+
+@media (max-width: 768px) { /* example for responsive adjustment */
+    .container {
+        margin-left: 0; /* Full width on smaller screens */
+        padding-left: 20px; /* This adds padding on the left side */
+    }
 }
