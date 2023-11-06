@@ -1,79 +1,53 @@
-﻿.navbar {
+﻿/* Common styles */
+.navbar {
     width: 100%;
     height: 75px;
-    background-color: #333;
+    background-color: red; /* This color seems to be the chosen one */
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: red;
+    justify-content: space-between; /* This is kept from GalleryAuth.css for better alignment */
+    padding: 0 15px;
     position: fixed;
     top: 0;
     z-index: 1000;
+    overflow: visible;
+}
+
+.gallery-navbar-logo {
+    height: 40px;
+    margin-left: 0;
 }
 
 .sidebar {
     width: 200px;
-    height: 100vh;  
+    height: 100vh;
     background-color: #555;
     color: white;
     position: fixed;
     top: 75px;
     left: 0;
     padding: 20px;
-    overflow-y: auto;  
+    overflow-y: auto;
     z-index: 10;
 }
 
-.image-container {
-    margin-left: 220px;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    overflow-y: auto; 
-    max-height: calc(100vh - 150px);  
-}
-
-.image-container img {
-    width: calc(50% - 10px);
-    height: 300px;
-    margin-bottom: 20px;
-    object-fit: cover;
-}
-
-.image-container .main-image {
-    width: 30px;
-    height: auto;
-}
-
 .card {
-    max-width: 230px; 
-    margin: auto;  
+    max-width: 230px;
+    margin: auto;
+    margin-top: 45px;
 }
-
 
 .card-img-top {
-    height: 200px;  
-    object-fit: cover; 
+    height: 200px;
+    object-fit: cover;
 }
-
-
-.top-navbar {
-    display: flex;    
-    align-items: center;  
-}
-
-/*    Side bar buttons   */
-
-
 
 .filter-section button {
     display: block;
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     background-color: #333;
     color: white;
     border: none;
@@ -83,32 +57,21 @@
 }
 
 .filter-section button:hover {
-    background-color: #444; 
+    background-color: #444;
 }
 
-
-.filter-section {
-    margin-top: 20px;  
-}
-
-.checkbox-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px; 
-}
-
-.checkbox-item input[type="checkbox"] {
-    margin-right: 8px;  
-}
 .gallery-footer {
     background-color: #333;
     color: #fff;
     padding: 5.5px;
     text-align: center;
+    z-index: 11;
+    position: relative;
 }
 
-.gallery-footer p {
-    margin: 0;
+.gallery-footer p,
+.gallery-footer ul {
+    margin: 0; /* To ensure consistency */
 }
 
 .gallery-footer ul {
@@ -116,11 +79,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    gap: 15px;  
-}
-
-.gallery-footer ul li {
-    display: inline;
+    gap: 15px;
 }
 
 .gallery-footer ul li a {
@@ -132,16 +91,68 @@
 .gallery-footer ul li a:hover {
     color: #2196F3;
 }
+
+/* Layout adjustments */
 .container {
-    margin-top: 5rem; /* already present */
-    margin-left: 220px; /* adjust this value to match your sidebar width + padding */
-    padding-right: 20px; /* This adds padding on the right side */
-    overflow-x: hidden; /* This ensures no horizontal scroll */
+    margin-top: 5rem;
+    margin-left: 220px;
+    padding-right: 20px;
+    overflow-x: hidden;
+    flex: 1; /* Ensuring the main content stretches to push footer down */
 }
 
-@media (max-width: 768px) { /* example for responsive adjustment */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        height: 60px;
+    }
+
+    .gallery-navbar-logo {
+        height: 30px;
+    }
+
     .container {
-        margin-left: 0; /* Full width on smaller screens */
-        padding-left: 20px; /* This adds padding on the left side */
+        margin-left: 0;
+        padding-left: 20px;
+    }
+}
+
+/* Flexbox layout for sticky footer */
+body, .gallery-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.gallery-footer {
+    flex-shrink: 0;
+}
+
+/* Additional responsive breakpoints can be added here if needed */
+.card-img-top {
+    max-width: 100%; /* ensures the image is never wider than its container */
+    object-fit: cover; /* ensures the image covers the card area */
+}
+
+/* Media query for smaller devices */
+@media (max-width: 768px) {
+    .card {
+        /* You may want to adjust card size on smaller screens */
+        max-width: none;
+    }
+    .image-container img {
+        /* Adjust image sizes for small screens */
+        width: 100%; /* full width */
+        margin-bottom: 15px; /* smaller margin */
+    }
+}
+
+/* Media query for larger devices */
+@media (min-width: 769px) {
+    .image-container {
+        /* Adjust the layout for larger screens if needed */
+    }
+    .card {
+        /* Larger cards on wider screens */
     }
 }

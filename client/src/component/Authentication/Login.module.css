@@ -1,0 +1,41 @@
+﻿.fullHeight {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7; /* Or any color you prefer */
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 800px; /* Adjust the width as you see fit */
+    margin: auto;
+}
+
+.loginCardHeader {
+    background-color: #d9534f; /* Bootstrap's .btn-danger color */
+    color: white;
+}
+
+.loginCardBody {
+    padding: 2rem;
+    width: 100%;
+}
+
+/* Make sure these classes are used correctly in your JSX if needed */
+.forgotPasswordButton,
+.registerButton {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 25px;
+}
+
+/* Additional styles for your inputs and buttons if needed */
+.loginInput,
+.buttonSubmit,
+.buttonFeide {
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 25px;
+}

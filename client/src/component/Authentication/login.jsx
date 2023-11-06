@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody, CardHeader } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from './Login.module.css';
+
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -66,10 +68,11 @@ function Login() {
 
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
-            <Card style={{ width: '25rem', maxWidth: 'none', padding: '25px', borderRadius: '50px', marginTop: '150px' }}>
-                <CardHeader className="bg-danger text-white" style={{ borderRadius: '25px' }}>Login</CardHeader>
-                <CardBody style={{ padding: '25px' }}>
+        <div className={styles.fullHeight}>
+            <Card className={styles.loginCard} style={{ maxWidth: '500px' }}>
+                <CardHeader className={styles.loginCardHeader}>Login</CardHeader>
+
+                <CardBody className={styles.loginCardBody}>
                     {message && <Alert color={message === 'Login successful' ? 'success' : 'danger'}>{message}</Alert>}
                     <Form onSubmit={handleLogin}>
                         <FormGroup>
@@ -106,9 +109,7 @@ function Login() {
                 </CardBody>
                 
             </Card>
-            
-            
-        </Container>
+        </div>
     );
 }    
 
