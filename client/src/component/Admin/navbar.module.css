@@ -1,0 +1,67 @@
+.topnavbar {
+  position: fixed;
+  width: 100%;
+  background-color: #131e29;
+  color: #ffffff;
+  padding: 0 30px; /* Control padding on left and right */
+  font-size: 20px;
+  display: flex;
+  justify-content: start; /* Align items to start */
+  align-items: center;
+  font-weight: 600;
+  top: 0;
+  z-index: 1000; /* High z-index to ensure it stays on top */
+}
+
+.topnavbar .navlinks {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push navigation links to the right */
+}
+
+.topnavbar a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 15px; /* Adjusted margin for spacing */
+  transition: color 0.3s ease-in-out;
+}
+
+.topnavbar a:hover {
+  color: #0097b2; /* Hover effect color change */
+  text-decoration: underline; /* Underline on hover for better visual feedback */
+}
+
+.navbarlogo {
+  width: 175px;
+  height: auto;
+  margin-right: 30px; /* Spacing after the logo */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .topnavbar {
+    font-size: 18px; /* Slightly reduce font size */
+  }
+
+  .navbarlogo {
+    width: 150px; /* Reduce logo size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .topnavbar {
+    flex-direction: column; /* Stack items on small screens */
+    padding: 8px;
+  }
+
+  .topnavbar .navlinks {
+    margin-left: 0; /* Align links to start */
+    margin-top: 10px; /* Spacing between logo and links */
+  }
+
+  .navbarlogo {
+    width: 120px; /* Further reduce logo size for very small screens */
+    margin-bottom: 10px; /* Spacing below logo */
+    align-self: center; /* Center logo */
+  }
+}
