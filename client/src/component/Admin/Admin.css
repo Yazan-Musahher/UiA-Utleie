@@ -60,21 +60,30 @@
     background-color: #444;
 }
 
-.gallery-footer {
+ /*     Users lists       */
+
+ .user-list {
+    width: 100%;
+    max-width: calc(100% - 200px);
+    margin-right: 200px; /* If you want to center it considering the sidebar */
+}
+
+.admin-footer {
+    margin-top: auto; /* Add this line */
     background-color: #333;
     color: #fff;
     padding: 5.5px;
     text-align: center;
     z-index: 11;
-    position: relative;
+    position: relative; /* Change this to 'relative' if not needed to be fixed */
 }
 
-.gallery-footer p,
-.gallery-footer ul {
+.admin-footer p,
+.admin-footer ul {
     margin: 0; /* To ensure consistency */
 }
 
-.gallery-footer ul {
+.admin-footer ul {
     list-style-type: none;
     padding: 0;
     display: flex;
@@ -82,13 +91,13 @@
     gap: 15px;
 }
 
-.gallery-footer ul li a {
+.admin-footer ul li a {
     color: #fff;
     text-decoration: none;
     transition: color 0.3s;
 }
 
-.gallery-footer ul li a:hover {
+.admin-footer ul li a:hover {
     color: #2196F3;
 }
 

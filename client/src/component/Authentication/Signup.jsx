@@ -33,7 +33,7 @@ function Signup() {
         setMessage('');
 
         try {
-            const response = await fetch('http://localhost:5210/api/account/signup', {
+            const response = await fetch('https://localhost:5210/api/account/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
