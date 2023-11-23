@@ -8,6 +8,7 @@ import Signup from './component/Authentication/Signup';
 import signupFeide from './component/Authentication/signupFeide';
 import Gallery from "./component/Gallery/Gallery";
 import GalleryAuth from './component/GalleryAuth/GalleryAuth';
+import AdminLogin from './component/Admin/AdminLogin';
 import Admin from './component/Admin/Admin';
 
 function App() {
@@ -22,8 +23,8 @@ function App() {
           <Route path="/signupFeide" element={<signupFeide />} />
           <Route path="/Gallery" element={<Gallery />} />
           <Route path="/Gallery/Authenticated" element={<GalleryAuth />} />
-          <Route path="/admin" element={<Admin />} />
-          
+          <Route path="/AdminLogin" element={<AdminLogin />} />
+          <Route path="/Admin" element={<Admin />} />
 
           
         </Routes>

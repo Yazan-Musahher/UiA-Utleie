@@ -1,51 +1,158 @@
-﻿.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f7f6;
-}
-
-.login-form {
-    padding: 2em;
-    background: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    width: 300px;
-}
-
-.login-form h2 {
-    text-align: center;
-    margin-bottom: 1em;
-}
-
-.input-group {
-    margin-bottom: 1em;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 0.5em;
-}
-
-.input-group input {
+/* Common styles */
+.navbar {
     width: 100%;
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.login-button {
-    width: 100%;
-    padding: 0.5em;
-    border: none;
-    background-color: red;
+    height: 75px;
+    background-color: red; /* This color seems to be the chosen one */
     color: white;
-    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This is kept from GalleryAuth.css for better alignment */
+    padding: 0 15px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    overflow: visible;
+}
+
+.gallery-navbar-logo {
+    height: 40px;
+    margin-left: 0;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: #555;
+    color: white;
+    position: fixed;
+    top: 75px;
+    left: 0;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.card {
+    max-width: 230px;
+    margin: auto;
+    margin-top: 45px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.filter-section button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.login-button:hover {
-    background-color: black;
+.filter-section button:hover {
+    background-color: #444;
+}
+
+.gallery-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 5.5px;
+    text-align: center;
+    z-index: 11;
+    position: relative;
+}
+
+.gallery-footer p,
+.gallery-footer ul {
+    margin: 0; /* To ensure consistency */
+}
+
+.gallery-footer ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.gallery-footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.gallery-footer ul li a:hover {
+    color: #2196F3;
+}
+
+/* Layout adjustments */
+.container {
+    margin-top: 5rem;
+    margin-left: 220px;
+    padding-right: 20px;
+    overflow-x: hidden;
+    flex: 1; /* Ensuring the main content stretches to push footer down */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        height: 60px;
+    }
+
+    .gallery-navbar-logo {
+        height: 30px;
+    }
+
+    .container {
+        margin-left: 0;
+        padding-left: 20px;
+    }
+}
+
+/* Flexbox layout for sticky footer */
+body, .gallery-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.gallery-footer {
+    flex-shrink: 0;
+}
+
+/* Additional responsive breakpoints can be added here if needed */
+.card-img-top {
+    max-width: 100%; /* ensures the image is never wider than its container */
+    object-fit: cover; /* ensures the image covers the card area */
+}
+
+/* Media query for smaller devices */
+@media (max-width: 768px) {
+    .card {
+        /* You may want to adjust card size on smaller screens */
+        max-width: none;
+    }
+    .image-container img {
+        /* Adjust image sizes for small screens */
+        width: 100%; /* full width */
+        margin-bottom: 15px; /* smaller margin */
+    }
+}
+
+/* Media query for larger devices */
+@media (min-width: 769px) {
+    .image-container {
+        /* Adjust the layout for larger screens if needed */
+    }
+    .card {
+        /* Larger cards on wider screens */
+    }
 }
