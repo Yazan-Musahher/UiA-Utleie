@@ -63,7 +63,6 @@ namespace Server.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email)
-                // Add other claims as needed
             };
 
             var roles = await _userManager.GetRolesAsync(user);
