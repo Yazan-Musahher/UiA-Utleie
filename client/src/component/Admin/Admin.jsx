@@ -6,8 +6,11 @@ import './Admin.css';
 import uialogo from '../assests/uialogo.png';
 
 function Admin() {
+  const [view, setView] = useState('users');
   const [users, setUsers] = useState([]);
+  const [tools, setTools] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showToolModal, setShowToolModal] = useState(false);
   const [currentUser, setCurrentUser] = useState({
     id: '',
     name: '',
@@ -15,7 +18,30 @@ function Admin() {
     studentNumber: '',
     lastName: ''
   });
+  const [currentTool, setCurrentTool] = useState({
+    toolId: '',
+    name: '',
+    isAvailable: false,
+    categoryId: ''
+  });
   const navigate = useNavigate();
+
+  const openToolModal = (tool) => {
+    console.log('Opening modal with tool:', tool); 
+    setCurrentTool(tool);
+    setShowToolModal(true);
+  };
+
+  const closeToolModal = () => setShowToolModal(false);
+
+  const handleToolInputChange = (e) => {
+    const { name, value, checked, type } = e.target;
+    if (type === 'checkbox') {
+      setCurrentTool({ ...currentTool, [name]: checked });
+    } else {
+      setCurrentTool({ ...currentTool, [name]: value });
+    }
+  };
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -105,6 +131,80 @@ function Admin() {
     }
   };
 
+  // Tools Section 
+
+  // Fetch tools thourgh API
+
+  const fetchTools = () => {
+    const authToken = localStorage.getItem('authToken');
+    fetch('https://localhost:5210/api/Tools', {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    })
+    .then(response => response.ok ? response.json() : Promise.reject(response))
+    .then(data => setTools(data)) // Assuming you have a state for tools
+    .catch(error => console.error('Error fetching tools:', error));
+  };
+
+  // Delete a Tool
+  const handleDeleteTool = (toolId) => {
+    const authToken = localStorage.getItem('authToken');
+    fetch(`https://localhost:5210/api/Tools/${toolId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+      fetchTools(); // Refresh the list of tools
+    })
+    .catch(error => console.error('Error deleting tool:', error));
+  };
+
+  // Create a new Tool
+
+  const handleCreateTool = (newTool) => {
+    const authToken = localStorage.getItem('authToken');
+    fetch('https://localhost:5210/api/Tools', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newTool)
+    })
+    .then(response => {
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+      fetchTools();
+    })
+    .catch(error => console.error('Error creating tool:', error));
+  };
+
+  // Update an exist Tool
+
+  const handleUpdateTool = (e) => {
+    e.preventDefault();
+    const authToken = localStorage.getItem('authToken');
+    fetch(`https://localhost:5210/api/Tools/${currentTool.toolId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(currentTool)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      console.log('Tool updated successfully');
+      closeToolModal();
+      fetchTools();
+    })
+    .catch(error => {
+      console.error('Error updating tool:', error);
+    });
+  };
+
+
   return (
     <div className="gallery-page">
       <div className="navbar">
@@ -121,7 +221,7 @@ function Admin() {
           <button onClick={fetchUsers} className="btn btn-secondary mb-2">
             All Users
           </button>
-          <button className="btn btn-secondary mb-2">Products</button>
+          <button onClick={fetchTools} className="btn btn-secondary mb-2">Products</button>
           <button className="btn btn-secondary mb-2">Payments</button>
         </div>
       </div>
@@ -208,6 +308,82 @@ function Admin() {
           </Form>
         </Modal.Body>
       </Modal>
+      <Modal show={showToolModal} onHide={closeToolModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>Update Tool</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={handleUpdateTool}>
+        <Form.Group>
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          value={currentTool.name}
+          onChange={handleToolInputChange}
+          required
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Check 
+          type="checkbox" 
+          label="Available" 
+          name="isAvailable"
+          checked={currentTool.isAvailable}
+          onChange={handleToolInputChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Category ID</Form.Label>
+        <Form.Control
+          type="number"
+          name="categoryId"
+          value={currentTool.categoryId}
+          onChange={handleToolInputChange}
+          required
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Update
+      </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
+
+    <div className="tools-list container mt-4">
+      {tools.length > 0 && (
+        <>
+          <h3>Tools</h3>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Available</th>
+                <th scope="col">Category</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tools.map(tool => (
+                <tr key={tool.toolId}>
+                  <td>{tool.name}</td>
+                  <td>{tool.isAvailable ? "Yes" : "No"}</td>
+                  <td>{tool.categoryId}</td>
+                  <td>
+                    <button className="btn btn-primary mr-2" onClick={() => openToolModal(tool)}>
+                      Update
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteTool(tool.toolId)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </div>
       <div className="admin-footer">
         <p>© 2023 Your Company Name. All rights reserved.</p>
         <ul>
