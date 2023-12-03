@@ -11,9 +11,9 @@ namespace Server.Controllers
     [Route("api/[controller]")]
     public class ToolsController : ControllerBase
     {
-        private readonly ToolDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ToolsController(ToolDbContext context)
+        public ToolsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -35,7 +35,7 @@ namespace Server.Controllers
         }
 
         // PUT: api/Tools/5
-       [HttpPut("{toolId}")]
+[HttpPut("{toolId}")]
 [Authorize] // Add your authorization logic here
 public async Task<IActionResult> UpdateTool(int toolId, Tool updatedTool)
 {

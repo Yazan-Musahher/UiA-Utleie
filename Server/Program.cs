@@ -6,8 +6,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Server.Data;
 using Server.Models;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+var stripeSettings = builder.Configuration.GetSection("Stripe");
+StripeConfiguration.ApiKey = stripeSettings["SecretKey"];
 
 // Add services to the container.
 var postgresConnectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
@@ -16,8 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Add PostgreSQL DbContext Service
-builder.Services.AddDbContext<ToolDbContext>(options =>
-    options.UseNpgsql(postgresConnectionString));
+//builder.Services.AddDbContext<ToolDbContext>(options =>
+   // options.UseNpgsql(postgresConnectionString));
 
 // IdentityRole
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -112,6 +117,7 @@ builder.Services.AddSession(options =>
 
 
 
+
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -123,7 +129,8 @@ using (var services = app.Services.CreateScope())
         var db = services.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var um = services.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var rm = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        ApplicationDbInitializer.Initialize(db, um, rm).Wait(); // Again, consider using async/await here
+        
+        await ApplicationDbInitializer.Initialize(db, um, rm);
     }
     catch (Exception ex)
     {

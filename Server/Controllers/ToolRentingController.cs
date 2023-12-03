@@ -13,9 +13,9 @@ namespace Server.Controllers;
 public class ToolRentingController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ToolDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public ToolRentingController(UserManager<ApplicationUser> userManager, ToolDbContext context)
+    public ToolRentingController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
     {
         _userManager = userManager;
         _context = context;
