@@ -49,39 +49,20 @@ function GalleryAuth() {
          navigate('/login');
     };
 
-     // Function to handle tool rental
-    const rentTool = (toolId) => {
-        const rentalDate = rentalDates[toolId];
-        if (!rentalDate) {
-            alert('Please select a date before renting a tool.');
-            return;
-        }
-    
-        const formattedDate = rentalDate.toISOString();
-        const authToken = localStorage.getItem('authToken'); // Get the stored token
-    
-        fetch('https://localhost:5210/api/toolrenting/rent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${authToken}`, // Set the Authorization header with the token
-            },
-            body: JSON.stringify({ toolId, rentingDate: formattedDate }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to rent tool');
-            }
-            return response.json();
-        })
-        .then(data => {
-            alert('Tool rented successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error renting the tool.');
-        });
-    };
+// Function to handle tool rental
+const rentTool = (toolId) => {
+    const rentalDate = rentalDates[toolId];
+    if (!rentalDate) {
+        alert('Please select a date before renting a tool.');
+        return;
+    }
+
+    // Format the date as required by your backend
+    const formattedDate = rentalDate.toISOString();
+
+    // Redirect to the payment route with query parameters
+    navigate(`/payment?toolId=${toolId}&rentalDate=${formattedDate}`);
+};
     // Function to handle date change
     const handleDateChange = (date, toolId) => {
         setRentalDates({
