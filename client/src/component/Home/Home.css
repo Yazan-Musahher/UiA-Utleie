@@ -1,4 +1,60 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+html, body {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+:root {
+    --primary-color: #B233FF; /* Lilla */
+    --secondary-color: #fafafa; /* Off-white for bakgrunner */
+    --accent-color: #ff6659; /* En lysere rød */ 
+    --text-color: #333; /* Mørkegrå for tekst */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.home-container .top-navbar {
+    background-color: var(--primary-color);
+}
+
+.home-container .main-content .clickable-boxes .box {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    
+}
+
+.home-container .main-content .clickable-boxes .box:hover {
+    background-color: var(--accent-color);
+}
+
+
+.home-container .top-navbar a:hover,
+.home-container .secondary-navbar a:hover,
+.footer a:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
+}
+
+
+.home-container .main-content .main-image {
+    max-height: 40vh; 
+    width: auto;
+    max-width: 100%;
+}
+
+
+.home-container .main-content .clickable-boxes .box {
+    border: none;
+    border-radius: 10px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.home-container .main-content .clickable-boxes .box:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}
+
 .home-container {
     min-height: 100%;
     display: flex;
@@ -14,6 +70,9 @@
     padding: 16px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right,#b71c1c, #e53935);
+    
 }
 
 .home-container .top-navbar a {
@@ -169,5 +228,35 @@
 
 .navbar-logo {
     height: 40px;   /* Adjust as needed */
-    margin-right: 350px;
+    order: -1;
 }
+/* Usynlig "spacer" element for å balansere logoen */
+.home-container .top-navbar::before,
+.home-container .top-navbar::after {
+    content: '';
+    flex: 1;
+}
+
+.home-container .top-navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0 10px; /* Gir litt plass rundt lenkene */
+    flex: none; /* Sørger for at lenkene ikke strekker seg */
+}
+
+/* Tilpasse for mindre skjermer */
+@media (max-width: 768px) {
+    .home-container .top-navbar {
+        justify-content: flex-start;
+    }
+
+    .home-container .top-navbar::before,
+    .home-container .top-navbar::after {
+        display: none;
+    }
+
+    .navbar-logo {
+        margin-right: 20px; /* eller ønsket plass */
+    }
+}
+
