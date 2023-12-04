@@ -14,7 +14,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Tool> Tools { get; set; }
     public DbSet<ToolRenting> ToolRentings { get; set; }
     public DbSet<Category> Categories { get; set; }
-    // Add any other DbSets you might have in ToolDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
