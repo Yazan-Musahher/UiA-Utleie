@@ -27,6 +27,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(tr => tr.ApplicationUserId)
             .IsRequired();
 
-        // Add any other model configurations you might have
     }
 }
