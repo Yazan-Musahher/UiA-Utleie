@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Server.Models;
-using Server.Data; // Add this to use ToolDbContext
+using Server.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
 
 namespace Server.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ToolRentingController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ToolDbContext _context; // Use your ToolDbContext
+    private readonly ApplicationDbContext _context;
 
-    public ToolRentingController(UserManager<ApplicationUser> userManager, ToolDbContext context)
+    public ToolRentingController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
     {
         _userManager = userManager;
         _context = context;
@@ -68,8 +68,6 @@ await _context.SaveChangesAsync(); // Save changes to the database
         }
         catch (Exception ex)
         {
-            // Log the exception here
-            // Return a generic error message to the client
             return StatusCode(500, new { message = "An error occurred while renting the tool.", error = ex.Message });
         }
     }

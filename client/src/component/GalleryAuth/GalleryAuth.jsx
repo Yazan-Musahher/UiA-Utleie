@@ -1,11 +1,11 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import date picker styles
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './GalleryAuth.css'; // Your CSS file for styling
+import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './GalleryAuth.css';
 import uialogo from '../assests/uialogo.png';
-import ProtectedRoute from '../../ProtectedRoute'; // Your protected route component
+import ProtectedRoute from '../../ProtectedRoute';
 
 function GalleryAuth() {
     const [tools, setTools] = useState([]);
@@ -20,7 +20,7 @@ function GalleryAuth() {
             setUsername(savedUsername);
         }
 
-        let url = 'http://localhost:5210/api/tools';
+        let url = 'https://localhost:5210/api/tools';
         if (selectedCategory) {
             url += `?categoryId=${selectedCategory}`;
         }
@@ -41,44 +41,28 @@ function GalleryAuth() {
 
     // Logout logic
     const logout = () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userName');
-        navigate('/login');
+
+    // Clear user token and profile data from localStorage
+     localStorage.removeItem('authToken');
+     localStorage.removeItem('username');
+     localStorage.removeItem('isAuthenticated');
+         navigate('/login');
     };
 
-    // Function to handle tool rental
-    const rentTool = (toolId) => {
-        const rentalDate = rentalDates[toolId];
-        if (!rentalDate) {
-            alert('Please select a date before renting a tool.');
-            return;
-        }
+// Function to handle tool rental
+const rentTool = (toolId) => {
+    const rentalDate = rentalDates[toolId];
+    if (!rentalDate) {
+        alert('Please select a date before renting a tool.');
+        return;
+    }
 
-        const formattedDate = rentalDate.toISOString();
+    // Format the date as required by your backend
+    const formattedDate = rentalDate.toISOString();
 
-        fetch('http://localhost:5210/api/toolrenting/rent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ toolId, rentingDate: formattedDate }),
-            credentials: 'include' // Include cookies with the request
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to rent tool');
-            }
-            return response.json();
-        })
-        .then(data => {
-            alert('Tool rented successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error renting the tool.');
-        });
-    };
-
+    // Redirect to the payment route with query parameters
+    navigate(`/payment?toolId=${toolId}&rentalDate=${formattedDate}`);
+};
     // Function to handle date change
     const handleDateChange = (date, toolId) => {
         setRentalDates({

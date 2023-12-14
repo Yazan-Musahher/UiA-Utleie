@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container, Alert, Card, CardBody, CardHeader } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert, Card, CardBody, CardHeader } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, Link } from 'react-router-dom';
+import styles from './Login.module.css';
+import uialogo from '../assests/uialogo.png';
+
 
 function Signup() {
     const [formData, setFormData] = useState({
@@ -30,7 +33,7 @@ function Signup() {
         setMessage('');
 
         try {
-            const response = await fetch('http://localhost:5210/api/account/signup', {
+            const response = await fetch('https://localhost:5210/api/account/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,10 +59,16 @@ function Signup() {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', maxWidth: '100%', color: 'white' }}>
-            <Card style={{ width: '25rem', maxWidth: 'none', padding: '25px', borderRadius: '50px', marginTop: '85' }}>
-                <CardHeader className="bg-danger text-white" style={{ borderRadius: '25px' }}>Signup</CardHeader>
-                <CardBody style={{ padding: '25px' }}>
+        <>
+            <div className="navbar">
+                <Link to="/">
+                    <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
+                </Link>
+            </div>
+        <div className={styles.fullHeight}>
+            <Card className={styles.loginCard} style={{ maxWidth: '500px' }}>
+                <CardHeader className={styles.loginCardHeader}>Signup</CardHeader>
+                <CardBody className={styles.loginCardBody}>
                     {message && <Alert color={message === 'Signup successful' ? 'success' : 'danger'}>{message}</Alert>}
                     <Form onSubmit={handleSignup}>
                         <FormGroup>
@@ -139,7 +148,16 @@ function Signup() {
                     <Link to="/Login"><Button color="white" className="mt-3" block style={{ borderRadius: '25px' }}>Already have an account?</Button></Link>
                 </CardBody>
             </Card>
-        </Container>
+        </div>
+            <div className={styles.galleryFooter}>
+                <p>© 2023 Your Company Name. All rights reserved.</p>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </>
     );
 }
 

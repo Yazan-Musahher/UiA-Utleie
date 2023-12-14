@@ -7,3 +7,11 @@ To start the project at your terminal you can type:
 docker-compose build 
 docker-compose up
 ```
+Teste users for Feide login
+
+```bash
+username: asbjorn_elevg
+password: 098asd
+username: inge_elevg
+password: 098asd
+```

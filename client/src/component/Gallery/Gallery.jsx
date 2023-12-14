@@ -1,5 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import {Link, useNavigate} from 'react-router-dom';  // Import useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './Gallery.css';
 import uialogo from '../assests/uialogo.png';
@@ -10,7 +10,7 @@ function Gallery() {
     const navigate = useNavigate();  // Instantiate useNavigate
 
     useEffect(() => {
-        let url = 'http://localhost:5210/api/tools';
+        let url = 'https://localhost:5210/api/tools';
         if (selectedCategory) {
             url += `?categoryId=${selectedCategory}`;
         }
@@ -28,8 +28,9 @@ function Gallery() {
     return (
         <div className="gallery-page">
             <div className="navbar">
-                <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
-                
+                <Link to="/">
+                    <img src={uialogo} alt="Logo" className="gallery-navbar-logo" />
+                </Link>
             </div>
             <div className="sidebar">
                 <div className="filter-section">
